@@ -54,6 +54,7 @@ export const register: Register = on => {
     return (
       <Box flexDirection="column">
         {tree}
+        <Box height={1} />
         {blocks.map((block, index) => {
           const n = index + 1
 
