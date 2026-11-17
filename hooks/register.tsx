@@ -3,7 +3,6 @@ import type { Register } from 'claude-code'
 
 import { extractBlocks, type CodeBlock } from './blocks'
 import { copyMessage, rowKey, rowLabel } from './copy-rows'
-import { offeredBlocks } from './context-rows'
 import { runCopycode } from './copycode'
 
 // Change the tag when the stored block shape changes.
@@ -70,36 +69,6 @@ export const register: Register = on => {
               }}
             >
               <Text dimColor>{rowLabel(block, n)}</Text>
-            </Button>
-          )
-        })}
-      </Box>
-    )
-  })
-
-  on('ui.render', { component: 'ContextMenu' }, async ($, e, next) => {
-    const blocks = offeredBlocks(e.props.row, await read($, lastBlocks))
-    if (blocks.length === 0) return next(e)
-
-    const { Box, Button } = $.ui.resolve(e)
-
-    return (
-      <Box flexDirection="column">
-        {blocks.map((block, index) => {
-          const n = index + 1
-
-          return (
-            <Button
-              key={rowKey(n)}
-              onPress={async press => {
-                const result = await $.ui.copy({
-                  text: block.code,
-                  surface: press.surface,
-                })
-                $.ui.toast(copyMessage(n, result))
-              }}
-            >
-              {`Copy code block ${n}`}
             </Button>
           )
         })}
