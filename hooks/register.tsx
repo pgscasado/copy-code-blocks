@@ -3,6 +3,7 @@ import type { Register } from 'claude-code'
 
 import { extractBlocks, type CodeBlock } from './blocks'
 import { copyMessage, rowKey, rowLabel } from './copy-rows'
+import { runCopycode } from './copycode'
 
 // Change the tag when the stored block shape changes.
 const lastBlocks = atom(
@@ -12,9 +13,30 @@ const lastBlocks = atom(
 )
 
 export const register: Register = on => {
+  on('session.start', async ($, e, next) => {
+    await $.command.register({
+      name: 'copycode',
+      description: 'Copy a code block from the last reply.',
+      argumentHint: '[n | list]',
+    })
+
+    return next(e)
+  })
+
+  on('command.run', { command: 'copycode' }, async ($, e) => {
+    const result = runCopycode(await read($, lastBlocks), e.args)
+    if (result.copy === undefined) return { text: result.text }
+
+    const copied = await $.ui.copy({ text: result.copy })
+
+    return {
+      text: copied.isCopied ? result.text : `Copy failed: ${copied.reason}`,
+    }
+  })
+
   on('turn.complete', async ($, e, next) => {
     if (e.reason === 'answer') {
-      await update($, lastBlocks, () => extractBlocks(e.text))
+      await update($, lastBlocks, () => extractBlocks(e.answer))
     }
 
     return next(e)
