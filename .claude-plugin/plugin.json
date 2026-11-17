@@ -1,5 +1,6 @@
 {
   "name": "copy-code-blocks",
   "version": "0.1.0",
-  "description": "Copy a fenced code block from Claude's reply."
+  "description": "Copy a fenced code block from Claude's reply.",
+  "types": "./types/index.d.ts"
 }
