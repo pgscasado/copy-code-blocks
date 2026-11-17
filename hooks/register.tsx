@@ -55,7 +55,7 @@ export const register: Register = on => {
       <Box flexDirection="column">
         {tree}
         <Box height={1} />
-        <Box flexDirection="row" justifyContent="flex-end">
+        <Box flexDirection="row" justifyContent="flex-end" width="100%">
           {blocks.map((block, index) => {
             const n = index + 1
 
