@@ -1,6 +1,4 @@
-import type { Shaped } from 'claude-code'
-
-import type { CodeBlock } from '../hooks/blocks'
+export type CodeBlock = { lang: string; code: string }
 
 declare module 'claude-code' {
   interface PluginState {

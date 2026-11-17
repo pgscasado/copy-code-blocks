@@ -32,7 +32,7 @@ export function runCopycode(blocks: CodeBlock[], args: string): CopycodeResult {
 
   if (arg === '') {
     const n = blocks.length
-    return { text: `Copied block ${n}.`, copy: blocks[n - 1].code }
+    return { text: `Copied block ${n}.`, copy: blocks[n - 1]?.code ?? "" }
   }
 
   if (!/^\d+$/.test(arg)) {
@@ -44,5 +44,5 @@ export function runCopycode(blocks: CodeBlock[], args: string): CopycodeResult {
     return { text: `No block ${n}: the last reply has ${blocks.length}.` }
   }
 
-  return { text: `Copied block ${n}.`, copy: blocks[n - 1].code }
+  return { text: `Copied block ${n}.`, copy: blocks[n - 1]?.code ?? "" }
 }

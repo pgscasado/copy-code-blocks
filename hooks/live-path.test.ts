@@ -30,7 +30,7 @@ test('live turn.complete stores blocks from answer', async ($, on) => {
     turnId: 't1',
   })
 
-  const { text } = await $.command.run({ command: 'copycode', args: '2' })
+  const { text } = await $.command.run({ command: 'copycode', args: '2', origin: { kind: 'composer' }, presentation: { isFullscreen: false, columns: 80 } })
 
   expect(text).toBe('Copied block 2.')
   expect(copied).toEqual(['npm test'])
@@ -49,7 +49,7 @@ test('live turn.complete with no fences stores zero blocks', async ($, on) => {
     turnId: 't2',
   })
 
-  const { text } = await $.command.run({ command: 'copycode', args: '' })
+  const { text } = await $.command.run({ command: 'copycode', args: '', origin: { kind: 'composer' }, presentation: { isFullscreen: false, columns: 80 } })
 
   expect(text).toBe('No code blocks in the last reply.')
   expect(copied).toEqual([])

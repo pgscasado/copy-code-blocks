@@ -16,15 +16,15 @@ export function extractBlocks(markdown: string): CodeBlock[] {
 
   let i = 0
   while (i < lines.length) {
-    const open = FENCE.exec(lines[i])
+    const open = FENCE.exec(lines[i] ?? "")
     if (!open) {
       i++
       continue
     }
 
-    const indent = open[1].length
-    const marker = open[2]
-    const info = open[3]
+    const indent = (open[1] ?? "").length
+    const marker = open[2] ?? ""
+    const info = open[3] ?? ""
     const char = marker[0]
 
     // A backtick fence's info string may not contain backticks.
@@ -37,9 +37,10 @@ export function extractBlocks(markdown: string): CodeBlock[] {
     let j = i + 1
     let closed = false
     while (j < lines.length) {
-      const line = lines[j]
+      const line = lines[j] ?? ""
       const close = /^ *(`{3,}|~{3,}) *$/.exec(line)
-      if (close && close[1][0] === char && close[1].length >= marker.length) {
+      const closeMarker = close?.[1] ?? ""
+      if (close && closeMarker[0] === char && closeMarker.length >= marker.length) {
         closed = true
         break
       }

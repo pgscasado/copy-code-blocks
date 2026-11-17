@@ -31,7 +31,7 @@ test('/copycode copies the last block of the last reply', async ($, on) => {
   const copied: string[] = []
   await startWithReply($, on, copied)
 
-  const { text } = await $.command.run({ command: 'copycode', args: '' })
+  const { text } = await $.command.run({ command: 'copycode', args: '', origin: { kind: 'composer' }, presentation: { isFullscreen: false, columns: 80 } })
 
   expect(text).toBe('Copied block 2.')
   expect(copied).toEqual(['npm test'])
@@ -41,7 +41,7 @@ test('/copycode 1 copies block 1', async ($, on) => {
   const copied: string[] = []
   await startWithReply($, on, copied)
 
-  const { text } = await $.command.run({ command: 'copycode', args: '1' })
+  const { text } = await $.command.run({ command: 'copycode', args: '1', origin: { kind: 'composer' }, presentation: { isFullscreen: false, columns: 80 } })
 
   expect(text).toBe('Copied block 1.')
   expect(copied).toEqual(['const a = 1'])
@@ -51,7 +51,7 @@ test('/copycode list lists the blocks and copies nothing', async ($, on) => {
   const copied: string[] = []
   await startWithReply($, on, copied)
 
-  const { text } = await $.command.run({ command: 'copycode', args: 'list' })
+  const { text } = await $.command.run({ command: 'copycode', args: 'list', origin: { kind: 'composer' }, presentation: { isFullscreen: false, columns: 80 } })
 
   expect(text).toBe('#1 ts, const a = 1\n#2 sh, npm test')
   expect(copied).toEqual([])
@@ -61,7 +61,7 @@ test('/copycode 9 says the block is out of range and copies nothing', async ($, 
   const copied: string[] = []
   await startWithReply($, on, copied)
 
-  const { text } = await $.command.run({ command: 'copycode', args: '9' })
+  const { text } = await $.command.run({ command: 'copycode', args: '9', origin: { kind: 'composer' }, presentation: { isFullscreen: false, columns: 80 } })
 
   expect(text).toBe('No block 9: the last reply has 2.')
   expect(copied).toEqual([])
