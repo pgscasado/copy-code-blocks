@@ -55,24 +55,26 @@ export const register: Register = on => {
       <Box flexDirection="column">
         {tree}
         <Box height={1} />
-        {blocks.map((block, index) => {
-          const n = index + 1
+        <Box flexDirection="row" justifyContent="flex-end">
+          {blocks.map((block, index) => {
+            const n = index + 1
 
-          return (
-            <Button
-              key={rowKey(n)}
-              onPress={async press => {
-                const result = await $.ui.copy({
-                  text: block.code,
-                  surface: press.surface,
-                })
-                $.ui.toast(copyMessage(n, result))
-              }}
-            >
-              <Text dimColor>{rowLabel(block, n)}</Text>
-            </Button>
-          )
-        })}
+            return (
+              <Button
+                key={rowKey(n)}
+                onPress={async press => {
+                  const result = await $.ui.copy({
+                    text: block.code,
+                    surface: press.surface,
+                  })
+                  $.ui.toast(copyMessage(n, result))
+                }}
+              >
+                <Text dimColor>{rowLabel(block, n)}</Text>
+              </Button>
+            )
+          })}
+        </Box>
       </Box>
     )
   })
